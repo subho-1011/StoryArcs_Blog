@@ -9,7 +9,7 @@ import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 import LogoutBtn from "./Header/LogoutBtn";
 import PostForm from "./post-form/PostForm";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "./auth/AuthLayout";
 import PostCard from "./PostCard";
 import RTE from "./RTE";
 
