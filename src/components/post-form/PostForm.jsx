@@ -30,15 +30,14 @@ export default function PostForm({ post }) {
             if (file) {
                 const fileID = file.$id
                 data.coverImage = fileID
-                const dbPost = await appwriteService.createPost({...data, userId: userData.$id})
-                if (dbPost) navigate(`/post/${dbPost.$id}`)
-            }
-            
+              }
+            const dbPost = await appwriteService.createPost({...data, userId: userData.$id})
+            if (dbPost) navigate(`/post/${dbPost.$id}`)           
         }
     }
 
     const slugTransform  = useCallback((value) => {
-        if (value && typeof value === 'string') return value.trim().toLowerCase().replace(/^[a-zA-Z\d\s]+/g, '-').replace(/\s/g, '-')
+        if (value && typeof value === 'string') return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
         return ''
     }, [])
 
@@ -79,7 +78,7 @@ export default function PostForm({ post }) {
         </div>
         <div className="w-1/3 px-2">
           <Input
-            label="Featured Image :"
+            label="Image :"
             type="file"
             className="mb-4"
             accept="image/png, image/jpg, image/jpeg, image/gif"
@@ -104,8 +103,8 @@ export default function PostForm({ post }) {
             type="submit"
             bgColor={post ? "bg-green-500" : undefined}
             className="w-full"
+            text={post ? "Update" : "Submit"}
           >
-            {post ? "Update" : "Submit"}
           </Button>
         </div>
       </form>
