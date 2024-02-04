@@ -1,9 +1,9 @@
 import appwriteService from "../appwrite/config";
 import { Link } from "react-router-dom";
 
-const PostCard = ({ $id, title, coverImage }) => {
+const PostCard = ({ slug, title, coverImage, $id }) => {
   return (
-    <Link to={`/post/${$id}`}>
+    <Link to={`/post/${slug}/${$id}`}>
       <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8">
         <div className="relative overflow-hidden shadow-md pb-80 mb-6">
           <img
