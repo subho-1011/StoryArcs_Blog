@@ -19,13 +19,15 @@ export class Service {
       return await this.databases.createDocument(
         conf.appwrite.databaseId,
         conf.appwrite.collectionId,
-        slug,
+        ID.unique(),
+        // TODO: all slug should be unique
         {
           title,
           content,
           coverImage,
           status,
           userId,
+          slug
         }
       );
     } catch (err) {
@@ -65,19 +67,21 @@ export class Service {
     }
   }
 
-  async getPost(slug) {
+  async getPost(id) {
+    console.log();
     try {
-      return await this.databases.listDocuments(
+      return await this.databases.getDocument(
         conf.appwrite.databaseId,
         conf.appwrite.collectionId,
-        slug
+        id
       );
     } catch (err) {
-      console.error("Appwrite Error:: getPost : ", err)
+      console.error("Appwrite Error:: getPost : ", err);
     }
   }
 
   async getPosts() {
+    // console.log("call getPosts");
     try {
       return await this.databases.listDocuments(
         conf.appwrite.databaseId,
@@ -89,38 +93,32 @@ export class Service {
     }
   }
 
-    // file upload service
-    async uploadFile(file) {
-      try {
-        return await this.storage.createFile(
-          conf.appwrite.bucketId,
-          ID.unique(),
-          file
-        )
-      } catch (err) {
-        console.error("Appwrite Error:: uploadFile : ", err);
-        return false
-      }
+  // file upload service
+  async uploadFile(file) {
+    try {
+      return await this.storage.createFile(
+        conf.appwrite.bucketId,
+        ID.unique(),
+        file
+      );
+    } catch (err) {
+      console.error("Appwrite Error:: uploadFile : ", err);
+      return false;
     }
+  }
 
-    async deleteFile(fileId) {
-      try {
-        return await this.storage.deleteFile(
-          conf.appwrite.bucketId,
-          fileId
-        )
-      } catch (err) {
-        console.error("Appwrite Error:: deleteFile : ", err);
-      }
+  async deleteFile(fileId) {
+    try {
+      return await this.storage.deleteFile(conf.appwrite.bucketId, fileId);
+    } catch (err) {
+      console.error("Appwrite Error:: deleteFile : ", err);
     }
+  }
 
-    getFilePreview(fileId) {
-        return this.storage.getFilePreview(
-            conf.appwrite.bucketId,
-            fileId
-        )
-    }
-
+  getFilePreview(fileId) {
+    if (!fileId) return null;
+    return this.storage.getFilePreview(conf.appwrite.bucketId, fileId);
+  }
 }
 
 const service = new Service();
