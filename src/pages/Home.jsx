@@ -6,56 +6,50 @@ import { Container, PostCard } from "../components";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [currUser, setCurrUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // call getPosts for getting all posts
-    appwriteService.getPosts([]).then((posts) => {
-      if (posts) setPosts(posts.documents);
-    });
-    // get current user
-    authService.getCurrentUser().then((user) => {
+    const fetchPosts = async () => {
+      const user = await authService.getCurrentUser();
       setCurrUser(user);
-    });
+      setLoading(false);
+
+      if (user) {
+        const posts = await appwriteService.getPosts([]);
+        if (posts) setPosts(posts.documents);
+      }
+    }
+
+    fetchPosts();
   }, []);
 
-  // if currUser is null, it means user is not logged in, please login
-  if (!currUser) {
+  if (loading) {
     return (
-      <div className="py-8 w-full mt-4 text-center">
-        <Container>
-          <div className="flex flex-wrap">
-            <div className="w-full p-2">
-              <h1 className="text-3xl font-bold">Please login</h1>
-            </div>
-          </div>
-        </Container>
-      </div>
-    );
+      <div className="w-full h-screen flex justify-center items-center">Loading....</div>
+    )
   }
 
-  return posts ? (
+  if (!currUser) {
+    return (
+      <>
+        <h1 className="text-3xl font-bold">Please login to see posts</h1>
+      </>
+    )
+  }
+
+  return (
     <div className="py-8 w-full">
       <Container>
         <div className="flex flex-wrap">
           {posts.map((post) => (
-            <div key={post.$id} className="w-1/3 p-2">
-              <PostCard {...post} />
-            </div>
-          ))}
+              <div key={post.$id} className="w-1/3 p-2">
+                <PostCard {...post} />
+              </div>
+            ))}
         </div>
       </Container>
     </div>
-  ) : (
-      <div className="py-8 w-full mt-4 text-center">
-        <Container>
-          <div className="flex flex-wrap">
-            <div className="w-full p-2">
-              <h1 className="text-3xl font-bold">Don`t have any posts</h1>
-            </div>
-          </div>
-        </Container>
-      </div>
-    );
+  );
 };
 
 export default Home;
