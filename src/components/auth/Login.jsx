@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../../store/authSlice";
-import { Button, Input, Logo } from "..";
 import { useDispatch } from "react-redux";
+import { Button, Input, Logo } from "../../components";
 import authService from "../../appwrite/auth";
 import { useForm } from "react-hook-form";
 
@@ -63,12 +63,14 @@ const Login = () => {
                     "Email address must be a valid address",
                 },
               })}
+              autoComplete="off"
             />
             <Input
               label="Password"
               placeholder="Enter your password"
               type="password"
               {...register("password", { required: true })}
+              autoComplete="off"
             />
           </div>
           <Button
