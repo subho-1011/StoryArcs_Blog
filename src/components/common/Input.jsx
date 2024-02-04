@@ -2,7 +2,7 @@ import React, { useId } from "react";
 
 // TODO : use forwardRef read more docs
 const Input = React.forwardRef(function Input(
-  { label, type = "text", className = "", ...props },
+  { label,text, type = "text", className = "", ...props },
   ref
 ) {
   const id = useId();
@@ -15,6 +15,7 @@ const Input = React.forwardRef(function Input(
         </label>
       )}
       <input
+        defaultValue={text}
         type={type}
         className={`mt-1 block w-full h-8 px-3 rounded-md border-gray-300 shadow-sm focus:outline-sky-200 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${className}`}
         {...props}
