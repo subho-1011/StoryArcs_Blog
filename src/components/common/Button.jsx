@@ -9,7 +9,7 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`px-2 py-2 rounded-lg ${bgColor} ${textColor} ${className}`}
+      className={`w-full px-2 py-2 rounded-lg ${bgColor} ${textColor} ${className}`}
       {...props}
     >
       {text}

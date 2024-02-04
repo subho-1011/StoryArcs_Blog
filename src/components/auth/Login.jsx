@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex justify-center items-center w-full bg-transparent md:min-w-96">
       <div
         className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
       >
@@ -38,8 +38,10 @@ const Login = () => {
             <Logo width="100%" />
           </span>
         </div>
-        <h2 className="text-3xl font-bold mb-4">Sign in to your account</h2>
-        <p className="text-gray-500 mb-8">
+        <h2 className="text-md text-center font-bold mb-4">
+          Sign in to your account
+        </h2>
+        <p className="text-gray-500 text-center mb-8">
           {" "}
           Don`t have an account?{" "}
           <Link to="/signup" className="text-blue-500 hover:underline">
@@ -48,7 +50,7 @@ const Login = () => {
         </p>
         {error && <p className="text-red-500 mb-8"> {error}</p>}
         <form action="" onSubmit={handleSubmit(login)} className="space-y-4">
-          <div className="">
+          <div className="py-4">
             <Input
               label="Email"
               placeholder="Enter your email"
@@ -68,10 +70,11 @@ const Login = () => {
               type="password"
               {...register("password", { required: true })}
             />
-            <Button type="submit" className="w-full">
-              Sign in
-            </Button>
           </div>
+          <Button
+            type="submit"
+            text={"Sign in"}
+          />
         </form>
       </div>
     </div>

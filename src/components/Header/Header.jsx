@@ -41,23 +41,28 @@ const Header = () => {
         <nav className="flex items-center justify-between">
           <div className="mr-4">
             <Link to="/">
-            <Logo width="70px"/>
+              <Logo width="70px"/>
             </Link>
-            </div>
-            <ul className="flex ml-auto">
-              {navItems.map((item) => (
-                item.active ? (
-                  <li key={item.name}>
-                    <button onClick={() => navigate(item.slug)} className="inline-block px-4 py-2 text-white duration-200 hover:bg-blue-200 rounded-full">{item.name}</button>
-                  </li>
-                ) : null
-              ))}
-              {authStatus ? <LogoutBtn /> : null}
-            </ul>
+          </div>
+          <ul className="flex ml-auto">
+            {navItems.map((item) =>
+              item.active ? (
+                <li key={item.name}>
+                  <button
+                    onClick={() => navigate(item.slug)}
+                    className="inline-block mx-2 px-4 py-2 text-white duration-200 hover:bg-blue-200 rounded-full"
+                  >
+                    {item.name}
+                  </button>
+                </li>
+              ) : null
+            )}
+            {authStatus ? <LogoutBtn /> : null}
+          </ul>
         </nav>
       </Container>
     </header>
-  )
+  );
 };
 
 export default Header;
