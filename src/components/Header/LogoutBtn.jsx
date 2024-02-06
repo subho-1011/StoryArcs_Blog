@@ -11,9 +11,10 @@ const LogoutBtn = () => {
         authService.logout();
         dispatch(logout())
         navigate("/", { replace: true })
+        // window.location.reload();
     }
   return (
-    <button onClick={handleLogout}  className="inline-block px-4 py-2 text-white duration-200 hover:bg-blue-200 rounded-full">Logout</button>
+    <button onClick={handleLogout}  className="inline-block px-4 py-2 text-rose-500 font-semibold duration-200 hover:text-rose-700 rounded-xl">Logout</button>
   )
 }
 
