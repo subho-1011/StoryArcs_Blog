@@ -2,7 +2,6 @@ import appwriteService from "../appwrite/config";
 import authService from "../appwrite/auth";
 import { useEffect, useState } from "react";
 import { Container, PostCard } from "../components";
-import Loading from "react-loading";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -20,23 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
-    const timer = setTimeout(() => {
-      loading();
-    }, 5000);
-    return () => clearTimeout(timer);
   }, []);
-
-  const loading = () => {
-    return (
-      <Container>
-        <div className="w-full h-screen">
-          <div className="animate-spin">
-            <Loading type="spin" color="#000" height={100} width={100} />
-          </div>
-        </div>
-      </Container>
-    );
-  };
 
   if (!currUser) {
     return (
