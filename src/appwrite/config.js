@@ -14,7 +14,7 @@ export class Service {
     this.storage = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, coverImage, status, userId }) {
+  async createPost({ title, slug, contentParagraph, coverImage, status, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwrite.databaseId,
@@ -23,11 +23,11 @@ export class Service {
         // TODO: all slug should be unique
         {
           title,
-          content,
+          contentParagraph,
           coverImage,
           status,
           userId,
-          slug
+          slug,
         }
       );
     } catch (err) {
@@ -35,7 +35,7 @@ export class Service {
     }
   }
 
-  async updatePost(slug, { title, content, coverImage, status }) {
+  async updatePost(slug, { title, content, contentParagraph, coverImage, status }) {
     try {
       return await this.databases.updateDocument(
         conf.appwrite.databaseId,
@@ -44,6 +44,7 @@ export class Service {
         {
           title,
           content,
+          contentParagraph,
           coverImage,
           status,
         }

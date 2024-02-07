@@ -11,6 +11,7 @@ export default function PostForm({ post }) {
       title: post?.title || "",
       slug: post?.slug || "",
       content: post?.content || "",
+      contentParagraph: post?.contentParagraph || "",
       status: post?.status || "draft",
     });
 
@@ -87,12 +88,13 @@ export default function PostForm({ post }) {
               shouldValidate: true,
             });
           }}
+          disabled
         />
         <RTE
           label="Content :"
-          name="content"
+          name="contentParagraph"
           control={control}
-          defaultValue={post?.content || getValues("content") || "Hello World!"}
+          defaultValue={post?.contentParagraph  || post?.content || getValues("contentParagraph") || "Hello World!"}
         />
       </div>
       <div className="w-1/3 px-2">
