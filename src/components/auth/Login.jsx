@@ -28,6 +28,22 @@ const Login = () => {
     }
   };
 
+  const anonymousLogin = async () => {
+    try {
+      const session = await authService.anonymousLogin();
+      if (session) {
+        const userData = await authService.getCurrentUser();
+        console.log(userData);
+        if (userData) {
+          dispatch(authLogin(userData));
+          navigate("/");
+        }
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <div className="flex justify-center items-center w-full bg-transparent md:min-w-96">
       <div
@@ -78,6 +94,13 @@ const Login = () => {
             text={"Sign in"}
           />
         </form>
+          <div className="text-center">
+            <p>or</p>
+            {/* <Link to="/home" >
+
+            </Link> */}
+            <div className="text-blue-500 hover:underline cursor-pointer" onClick={anonymousLogin}>use as anonymous</div>
+          </div>
       </div>
     </div>
   );
