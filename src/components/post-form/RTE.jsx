@@ -1,15 +1,20 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
-import conf from "../conf/conf";
+import conf from "../../conf/conf";
 
-export default function RTE({ name, control, label, defaultValue = "Hello World" }) {
+export default function RTE({
+  name,
+  control,
+  label,
+  defaultValue = "Hello World",
+}) {
   return (
     <div className="w-full">
       {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
       {/* TODO : read controller */}
       <Controller
-        name={name || "content"}
+        name={name || "contentParagraph"}
         control={control}
         render={({ field: { onChange } }) => (
           <Editor

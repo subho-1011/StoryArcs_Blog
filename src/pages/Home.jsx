@@ -2,50 +2,60 @@ import appwriteService from "../appwrite/config";
 import authService from "../appwrite/auth";
 import { useEffect, useState } from "react";
 import { Container, PostCard } from "../components";
+import {HeroSection, PopularCat, PopularPost} from "../components";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [currUser, setCurrUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+  const fetchPosts = async () => {
+    const user = await authService.getCurrentUser();
+    console.log(user);
+    setCurrUser(user);
+
+    const posts = await appwriteService.getPosts([]);
+    if (user?.name !== "") {
+      if (posts) setPosts(posts.documents);
+    } else {
+      const slicePost = posts.documents.slice(posts.documents.length - 10);
+      setPosts(slicePost);
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const user = await authService.getCurrentUser();
-      setCurrUser(user);
-      setLoading(false);
-
-      if (user) {
-        const posts = await appwriteService.getPosts([]);
-        if (posts) setPosts(posts.documents);
-      }
-    }
-
     fetchPosts();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">Loading....</div>
-    )
-  }
-
-  if (!currUser) {
-    return (
-      <>
-        <h1 className="text-3xl font-bold">Please login to see posts</h1>
-      </>
-    )
-  }
-
   return (
-    <div className="py-8 w-full">
-      <Container>
-        <div className="flex flex-wrap">
-          {posts.map((post) => (
-              <div key={post.$id} className="w-1/3 p-2">
-                <PostCard {...post} />
+    <div className="text-center bg-gray-100 dark:bg-slate-800 dark:text-slate-200">
+      <Container className="py-8 h-auto w-full">
+        <HeroSection post={posts[posts.length - 1]} />
+      </Container>
+      <Container className="h-auto w-full">
+        <PopularCat />
+      </Container>
+      <Container className="py-8 pb-16 h-auto w-full">
+        <div className="w-full flex flex-row justify-between">
+          <div className="w-4/5">
+            <h1 className="text-4xl font-bold text-left pb-10">Recent Posts</h1>
+            <div className="flex h-auto w-full">
+              <div className="w-full h-auto">
+                {posts.map((post) => (
+                  <PostCard key={post.$id} {...post} />
+                ))}
               </div>
-            ))}
+            </div>
+          </div>
+          <div className="w-1/5 ml-10 pl-4 text-left">
+            <h1 className="text-2xl font-bold pb-10 ">
+              Popular Posts
+            </h1>
+              <div className="h-auto">
+                {posts.map((post) => (
+                  <PopularPost key={post.$id} {...post} />
+                ))}
+            </div>
+          </div>
         </div>
       </Container>
     </div>

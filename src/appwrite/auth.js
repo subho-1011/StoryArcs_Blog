@@ -30,6 +30,16 @@ export class AuthService {
     }
   }
 
+  async anonymousLogin() {
+    try {
+      const account = await this.account.createAnonymousSession();
+      if (!account) return null;
+      return account;
+    } catch (err) {
+      console.error("Appwrite Error:: anonymousLogin : ", err);
+    }
+  }
+
   async login({ email, password }) {
     try {
       const account = await this.account.createEmailSession(email, password);
@@ -45,10 +55,9 @@ export class AuthService {
     try {
       return await this.account.get();
     } catch (err) {
-      // console.error("Appwrite Error:: getCurrentUser : ", err);
+      console.error("Appwrite Error:: getCurrentUser : ", err);
       return null;
     }
-    
   }
 
   async logout() {

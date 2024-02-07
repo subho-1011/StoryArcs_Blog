@@ -24,17 +24,17 @@ export default function Post() {
   }, [slug, id, navigate]);
 
   // TODO: delete post off now
-  // const deletePost = () => {
-  //   appwriteService.deletePost(post.$id).then((status) => {
-  //     if (status) {
-  //       appwriteService.deleteFile(post.coverImage);
-  //       navigate("/");
-  //     }
-  //   });
-  // };
+  const deletePost = () => {
+    appwriteService.deletePost(post.$id).then((status) => {
+      if (status) {
+        appwriteService.deleteFile(post.coverImage);
+        navigate("/");
+      }
+    });
+  };
 
   return post ? (
-    <div className="py-8">
+    <div className="py-20">
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
           <img
@@ -50,7 +50,7 @@ export default function Post() {
               <Button
                 text={"Delete"}
                 bgColor="bg-red-500"
-                // onClick={deletePost}
+                onClick={deletePost}
               />
             </div>
           )}
@@ -58,7 +58,7 @@ export default function Post() {
         <div className="w-full mb-6">
           <h1 className="text-2xl font-bold">{post.title}</h1>
         </div>
-        <div className="browser-css">{parse(String(post.content))}</div>
+      <div className="browser-css">{parse(String(post?.content || post?.contentParagraph))}</div>
       </Container>
     </div>
   ) : null;

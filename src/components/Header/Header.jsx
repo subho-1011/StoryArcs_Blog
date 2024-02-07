@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "../../components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ThemeBtn from "./ThemeBtn";
 
 const Header = () => {
   const authStatus = useSelector((state) => state.auth.status);
@@ -36,12 +37,12 @@ const Header = () => {
   ];
 
   return (
-    <header className="py-3 shadow bg-gradient-to-t from-violet-600 to-violet-800">
+    <header className="sticky top-0 z-10 bg-transparent py-3 shadow bg-gray-100 border-b border-gray-300 dark:bg-gray-800 dark:text-slate-100">
       <Container>
         <nav className="flex items-center justify-between">
           <div className="mr-4">
             <Link to="/">
-              <Logo width="70px"/>
+              <Logo width="70px" />
             </Link>
           </div>
           <ul className="flex ml-auto">
@@ -50,15 +51,16 @@ const Header = () => {
                 <li key={item.name}>
                   <button
                     onClick={() => navigate(item.slug)}
-                    className="inline-block mx-2 px-4 py-2 text-white duration-200 hover:bg-blue-200 rounded-full"
+                    className="inline-block mx-2 px-4 py-2 font-semibold text-gray-900 dark:text-slate-200 duration-200 hover:dark:text-slate-400 rounded-xl"
                   >
                     {item.name}
                   </button>
                 </li>
               ) : null
             )}
-            {authStatus ? <LogoutBtn /> : null}
           </ul>
+          <ThemeBtn />
+            {authStatus ? <LogoutBtn /> : null}
         </nav>
       </Container>
     </header>
