@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { Provider } from "react-redux";
-import store from "./store/store.js";
+import store from "./services/store/store.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   Home,
@@ -13,7 +13,7 @@ import {
   Login,
   Signup,
 } from "./pages";
-import { AuthLayout } from "./components";
+import { AuthLayout } from "./layout";
 
 const router = createBrowserRouter([
   {
@@ -22,11 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <AuthLayout>
-            <Home />
-          </AuthLayout>
-        ),
+        element: <Home />
       },
       {
         path: "/login",
