@@ -14,7 +14,15 @@ export class Service {
     this.storage = new Storage(this.client);
   }
 
-  async createPost({ title, slug, contentParagraph, coverImage, status, userId }) {
+  async createPost({
+    title,
+    slug,
+    author,
+    contentParagraph,
+    coverImage,
+    status,
+    userId,
+  }) {
     try {
       return await this.databases.createDocument(
         conf.appwrite.databaseId,
@@ -22,11 +30,12 @@ export class Service {
         ID.unique(),
         {
           title,
+          slug,
+          author,
           contentParagraph,
           coverImage,
           status,
           userId,
-          slug,
         }
       );
     } catch (err) {
@@ -34,15 +43,19 @@ export class Service {
     }
   }
 
-  async updatePost(slug, { title, content, contentParagraph, coverImage, status }) {
+  async updatePost(
+    id,
+    { title, content, slug, contentParagraph, coverImage, status }
+  ) {
     try {
       return await this.databases.updateDocument(
         conf.appwrite.databaseId,
         conf.appwrite.collectionId,
-        slug,
+        id,
         {
           title,
           content,
+          slug,
           contentParagraph,
           coverImage,
           status,
@@ -53,12 +66,12 @@ export class Service {
     }
   }
 
-  async deletePost(slug) {
+  async deletePost(id) {
     try {
       await this.databases.deleteDocument(
         conf.appwrite.databaseId,
         conf.appwrite.collectionId,
-        slug
+        id
       );
       return true;
     } catch (err) {
@@ -86,7 +99,7 @@ export class Service {
       return await this.databases.listDocuments(
         conf.appwrite.databaseId,
         conf.appwrite.collectionId,
-        [Query.equal("status", "active")]
+        [Query.equal("status", "active"), Query.limit(50)]
       );
     } catch (err) {
       console.error("Appwrite Error:: getPosts : ", err);

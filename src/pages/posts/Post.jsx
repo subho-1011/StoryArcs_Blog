@@ -1,36 +1,32 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import appwriteService from "../../services/appwrite/config";
 import { Button } from "../../components";
 import { Container } from "../../layout";
+import { deletePostById } from "../../services/store/slice/postSlice";
 
-export default function Post() {
-  const [post, setPost] = useState(null);
+const Post = () => {
   const { slug, id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  //  get the user data from store
   const userData = useSelector((state) => state.auth.userData);
 
+  //  get allpost from store
+  const posts = useSelector((state) => state.post.posts);
+
+  //  get the current post
+  const post = posts.find((post) => post.$id === id);
+
+  //  check if the user is currently logged in user
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-  useEffect(() => {
-    if (id) {
-      appwriteService.getPost(id).then((post) => {
-        if (post) setPost(post);
-        else navigate("/");
-      });
-    } else navigate("/");
-  }, [slug, id, navigate]);
-
   const deletePost = () => {
-    appwriteService.deletePost(post.$id).then((status) => {
-      if (status) {
-        appwriteService.deleteFile(post.coverImage);
-        navigate("/");
-      }
-    });
+    dispatch(deletePostById(id));
+    // dispatch(fetchAllPosts());
+    navigate("/");
   };
 
   return post ? (
@@ -40,7 +36,7 @@ export default function Post() {
           <img
             src={appwriteService.getFilePreview(post?.coverImage)}
             className="w-full h-96 rounded-xl object-cover"
-            alt={post.title}
+            alt={post?.title}
           />
           {isAuthor && (
             <div className="absolute right-6 top-6">
@@ -56,10 +52,14 @@ export default function Post() {
           )}
         </div>
         <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
+          <h1 className="text-2xl font-bold">{post?.title}</h1>
         </div>
-      <div className="browser-css">{parse(String(post?.content || post?.contentParagraph))}</div>
+        <div className="browser-css">
+          {parse(String(post?.content || post?.contentParagraph))}
+        </div>
       </Container>
     </div>
   ) : null;
-}
+};
+
+export default Post;

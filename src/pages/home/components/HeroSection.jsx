@@ -22,7 +22,7 @@ const HeroSection = ({ post }) => {
           </div>
           <div className="w-1/2 flex flex-col pl-10 py-2">
             <div>{post?.title.toUpperCase()}</div>
-            <div className="w-full py-2">{post?.$createdAt.split("T")[0]}</div>
+            <div className="w-full py-2">{post?.$createdAt?.split("T")[0]}</div>
             <div className="w-full py-2 overflow-hidden">
               {parse(String(post?.contentParagraph))}
             </div>

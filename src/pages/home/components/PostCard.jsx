@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
-import appwriteService from "../../../services/appwrite/config"
+import appwriteService from "../../../services/appwrite/config";
 
 const PostCard = ({
   slug,
@@ -22,7 +22,7 @@ const PostCard = ({
         </div>
         <div className="w-1/2 flex flex-col pl-10 py-2 text-left">
           <div>{title.toUpperCase()}</div>
-          <div className="w-full py-2">{$createdAt.split("T")[0]}</div>
+          <div className="w-full py-2">{$createdAt?.split("T")[0]}</div>
           <div className="w-full py-2 overflow-hidden">
             {parse(String(contentParagraph))}
           </div>
