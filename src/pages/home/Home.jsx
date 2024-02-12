@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchAllPosts());
-  }, [dispatch, posts]);
+  }, [dispatch]);
 
   return (
     <div className="text-center bg-gray-100 dark:bg-slate-800 dark:text-slate-200">
