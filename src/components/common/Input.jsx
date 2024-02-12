@@ -2,7 +2,7 @@ import React, { useId } from "react";
 
 // TODO : use forwardRef read more docs
 const Input = React.forwardRef(function Input(
-  { label,text, type = "text", className = "", ...props },
+  { label, text, type = "text", className = "", ...props },
   ref
 ) {
   const id = useId();
