@@ -15,7 +15,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="text-center bg-gray-100 dark:bg-slate-800 dark:text-slate-200">
+    <div className="text-center bg-white dark:bg-slate-800 dark:text-slate-200">
       <Container className="py-8 h-auto w-full">
         <HeroSection post={posts[posts.length - 1]} />
       </Container>
@@ -24,7 +24,7 @@ const Home = () => {
       </Container>
       <Container className="py-8 pb-16 h-auto w-full">
         <div className="w-full flex flex-row justify-between">
-          <div className="w-4/5">
+          <div className="md:w-4/5">
             <h1 className="text-4xl font-bold text-left pb-10">Recent Posts</h1>
             <div className="flex h-auto w-full">
               <div className="w-full h-auto">
@@ -34,7 +34,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/5 ml-10 pl-4 text-left">
+          <div className="md:w-1/5 hidden md:flex flex-col ml-10 pl-4 text-left">
             <h1 className="text-2xl font-bold pb-10 ">Popular Posts</h1>
             <div className="h-auto">
               {posts.map((post) => (

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 // FIXME THEME NOT WORKING
 const ThemeBtn = () => {
-  const [theme, setTheme] = useState(true); // Initialize with true for light theme
+  const [theme, setTheme] = useState(false); // Initialize with true for light theme
 
   useEffect(() => {
     // On component mount, check if there's a theme in local storage and set the theme accordingly
@@ -31,7 +31,7 @@ const ThemeBtn = () => {
       onClick={onThemeChange}
       className="inline-block px-4 py-2 rounded-xl"
     >
-      {theme ? <MdOutlineLightMode size={25} /> : <MdDarkMode size={25} />}
+      {theme ? <MdDarkMode size={25} /> : <MdOutlineLightMode size={25} />}
     </button>
   );
 };

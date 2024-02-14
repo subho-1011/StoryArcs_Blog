@@ -86,20 +86,20 @@ export default function PostForm({ post }) {
   }, [watch, post, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap ">
-      <div className="w-2/3 px-2">
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+      <div className="w-2/3 px-2 text-left">
         <label>Title</label>
         <Input
           text={post?.title || ""}
           placeholder="Title..."
-          className="mb-4 text-white dark:text-gray-600"
+          className="mb-4 ring-1 ring-black dark:text-gray-600"
           {...register("title", { required: true })}
         />
         <label>Slug</label>
         <Input
           text={post?.slug || ""}
           placeholder="Slug"
-          className="mb-4"
+          className="mb-4 ring-1 ring-black"
           {...register("slug", { required: true })}
           onInput={(e) => {
             setValue("slug", slugTransform(e.currentTarget.value), {
@@ -120,7 +120,7 @@ export default function PostForm({ post }) {
           }
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="w-1/3 px-2 text-left">
         <label>Image</label>
         <Input
           type="file"
@@ -141,7 +141,7 @@ export default function PostForm({ post }) {
         <Select
           options={["active", "inactive"]}
           label="Status"
-          className="mb-4"
+          className="mb-4 ring-1 ring-black"
           {...register("status", { required: true })}
         />
         <Button

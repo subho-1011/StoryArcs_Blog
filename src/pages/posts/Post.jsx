@@ -32,14 +32,14 @@ const Post = () => {
   return post ? (
     <div className="py-20 bg-white dark:bg-slate-700 dark:text-gray-200">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+        <div className="w-auto flex justify-center mb-4 relative border rounded-xl p-2">
           <img
             src={appwriteService.getFilePreview(post?.coverImage)}
-            className="w-full h-96 rounded-xl object-cover"
+            className="w-auto h-auto rounded-xl object-contain"
             alt={post?.title}
           />
           {isAuthor && (
-            <div className="absolute right-6 top-6">
+            <div className="absolute right-2 top-2">
               <Link to={`/edit-post/${slug}/${post.$id}`}>
                 <Button text={"Edit"} bgColor="bg-green-500" className="mr-3" />
               </Link>
@@ -51,10 +51,10 @@ const Post = () => {
             </div>
           )}
         </div>
-        <div className="w-full mb-6">
+        <div className="w-full text-left mb-6">
           <h1 className="text-2xl font-bold">{post?.title}</h1>
         </div>
-        <div className="browser-css">
+        <div className="browser-css text-left">
           {parse(String(post?.content || post?.contentParagraph))}
         </div>
       </Container>
